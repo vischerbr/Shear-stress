@@ -1,4 +1,4 @@
-function [ neighbor_table ] = make_table(dots)
+function [ neighbor_table ] = make_table(dots,pars)
 %make_table Dirtily constructs neighbor table for created dots. Radius is
 %currently hardcoded, I'm not a software engineer.
 %   Detailed explanation goes here
@@ -7,11 +7,15 @@ function [ neighbor_table ] = make_table(dots)
 number_of_dots = size(dots,1);
 neighbor_table = zeros(number_of_dots,number_of_dots);
 
-R = 5;
+
+R = pars.R;
 
 % Use range search to create list of nearest neighbors
-neighbor_search = rangesearch(dots,dots,R);
-
+if pars.falloff
+    neighbor_search = rangesearch(dots,dots,3*R);
+else
+    neighbor_search = rangesearch(dots,dots,R);
+end
 % Loop over list of neighbors and construct logical neighbor table
 
 for m = 1:length(neighbor_search)

@@ -49,6 +49,7 @@ for i=1:ndots
     end
 end
 
-
+dots = dots(any(dots,2),:);
+sprintf("Placed %d dots.", size(dots, 1))
 end
 
